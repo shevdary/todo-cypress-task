@@ -76,15 +76,27 @@ describe('Navigation', () => {
         cy.contains('Add').click();
         cy.get('.list__element--item').should('contain', 'Arrive to the grocery shop');
         
-        cy.contains('Wake up')
+        cy.contains('Cook the dish')
           .parent()
-          .contains('Delete').click();
-        
-        cy.contains('Sleep more then 8h')
+          .contains('Update').click()
           .parent()
-          .contains('Delete').click();
+          .get('input[type="text"]').filter('[value="Cook the dish"]').clear().type('Buy a new dress')
+          .parent()
+          .contains('Save').click();
         
-        cy.get('.list__wrapper').should('not.contain', 'Sleep more then 8h');
-        cy.get('.list__wrapper').should('not.contain', 'Wake up');
+        cy.contains('Buy a new dress').should('exist')
+        
+        cy.contains('Arrive to the grocery shop')
+          .parent()
+          .contains('Update').click()
+          .parent()
+          .get('input[type="text"]').filter('[value="Arrive to the grocery shop"]').clear().type('Buy a new car')
+          .parent()
+          .contains('Save').click();
+        
+        cy.contains('Arrive to the grocery shop').should('not.exist');
+        
+        cy.contains('Wake up').should('exist');
+        cy.contains('Sleep more then 8h').should('exist');
     })
 })
